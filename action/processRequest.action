@@ -1,0 +1,9 @@
+# Goal
+string request_data
+---
+# Result
+bool success
+string result_message
+---
+# Feedback
+float32 progress
