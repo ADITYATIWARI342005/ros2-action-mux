@@ -1,0 +1,45 @@
+1. Build and Run
+
+(a) Update CMakeLists.txt
+    add_executable(generic_subscriber src/generic_subscriber.cpp)
+    ament_target_dependencies(generic_subscriber rclcpp std_msgs geometry_msgs)
+
+    add_executable(string_publisher src/string_publisher.cpp)
+    ament_target_dependencies(string_publisher rclcpp std_msgs)
+
+    add_executable(int_publisher src/int_publisher.cpp)
+    ament_target_dependencies(int_publisher rclcpp std_msgs)
+
+    add_executable(pose_publisher src/pose_publisher.cpp)
+    ament_target_dependencies(pose_publisher rclcpp geometry_msgs)
+
+    install(TARGETS generic_subscriber string_publisher int_publisher pose_publisher
+    DESTINATION lib/${PROJECT_NAME})
+
+(b) Update package.xml
+    <depend>std_msgs</depend>
+    <depend>geometry_msgs</depend>
+
+(c) Build the Package
+    colcon build --packages-select my_generic_pkg
+    source install/setup.bash
+
+
+2. Running the Nodes
+(a) Start the Generic Subscriber
+    ros2 run my_generic_pkg generic_subscriber
+(b) Start the Publishers
+    ros2 run my_generic_pkg string_publisher
+    ros2 run my_generic_pkg int_publisher
+    ros2 run my_generic_pkg pose_publisher
+
+
+5. Expected Output
+From generic_subscriber
+[INFO] Received on [/string_topic]: std_msgs::msg::String
+[INFO] Received on [/int_topic]: std_msgs::msg::Int32
+[INFO] Received on [/pose_topic]: geometry_msgs::msg::Pose
+From Publishers
+[INFO] Publishing: Hello, ROS 2!
+[INFO] Publishing: 42
+[INFO] Publishing Pose: (1.0, 2.0, 3.0)
